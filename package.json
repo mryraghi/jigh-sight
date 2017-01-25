@@ -1,0 +1,13 @@
+{
+  "name": "jigh-sight",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "babel-runtime": "6.18.0",
+    "bootstrap": "^4.0.0-alpha.6",
+    "lodash": "^4.17.4",
+    "meteor-node-stubs": "~0.2.0"
+  }
+}

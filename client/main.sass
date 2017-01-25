@@ -1,0 +1,60 @@
+@import "../../node_modules/bootstrap/scss/bootstrap"
+
+@font-face
+  font-family: 'Fira Code'
+  src: url('/public/fonts/FiraCode-Light.eot')
+  src: url('/public/fonts/FiraCode-Light.eot?#iefix') format('embedded-opentype'), url('/public/fonts/FiraCode-Light.woff2') format('woff2'), url('/public/fonts/FiraCode-Light.woff') format('woff'), url('/public/fonts/FiraCode-Light.ttf') format('truetype'), url('/public/fonts/FiraCode-Light.svg#FiraCode-Light') format('svg')
+  font-weight: 300
+  font-style: normal
+
+#editor
+  resize: none
+  width: 100%
+  color: #55595c
+  padding: 10px
+  margin: 0
+  font-size: 16px
+  background-color: #f9fafc
+  border: 1px solid #eef0f3
+  line-height: 1.25
+  -moz-transition-duration: 0.2s
+  -o-transition-duration: 0.2s
+  -webkit-transition-duration: 0.2s
+  transition-duration: 0.2s
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+  border-radius: 5px
+  font-family: "Fira Code", monospace !important
+
+  &:focus
+    outline: none
+
+.identifier
+  color: #f1c40f
+  font-weight: bold
+
+.double, .integer
+  color: green
+  font-weight: bold
+
+.add, .subtract
+  color: lightcoral
+  
+.boolean, .null, .reserved
+  color: #e67e22
+  font-weight: bold
+
+.operator
+  color: black
+  font-weight: bold
+
+.property_name
+  color: #27ae60
+
+// EDITOR OVERRIDE
+
+.CodeMirror pre
+  font-size: 16px
+
+.CodeMirror-gutter-elt
+  font-size: 16px

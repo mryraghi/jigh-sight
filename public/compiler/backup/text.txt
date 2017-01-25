@@ -1,0 +1,5 @@
+print "The value of expression 123 * 25 is ";
+print 123 * 25;
+print newline;
+10 + 5 * 8;
+print "end of program";
