@@ -1,7 +1,7 @@
 # Jight-Sight
 
 This is a **Formal Language and Compilers** course project.
-The entire grammar of JavaScript language has been translated into Flex and Yacc (C language) from [ECMA International](http://www.ecma-international.org/ecma-262/6.0/).
+The entire grammar of JavaScript language has been translated into Flex and Yacc (C language) from [ECMAScript® 2015 Language Specification](http://www.ecma-international.org/ecma-262/6.0/).
 With the web GUI one can write in JavaScipt language and get notified whenever a wrong syntax is used. Moreover, reserved words, identifiers and special characters are highlighted at compile time.
 
 
@@ -12,6 +12,9 @@ With the web GUI one can write in JavaScipt language and get notified whenever a
 - `meteor run`
 - connect to `localhost:3000`
 - write code in JavaScript and be amazed
+
+## Status
+_Development_
 
 ## Credits
 Romeo Bellon

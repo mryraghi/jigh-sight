@@ -10,7 +10,7 @@ void yyerror(char *);
 extern int line;
 extern int column;
 
-char *jserror = "[Jigh-Sight Error]";
+char *jserror = "- [Jigh-Sight Error]";
 char *jserrortype = "ERROR TYPE";
 
 %}
@@ -679,7 +679,7 @@ Statement:
  Declaration:
     HoistableDeclaration
     | ClassDeclaration
-    //| LexicalDeclaration
+    | LexicalDeclaration
     | ExportDeclaration
     ;
 
