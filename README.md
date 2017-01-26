@@ -10,9 +10,14 @@ With the web GUI one can write in JavaScipt language and get notified whenever a
 - `cd jigh-sight`
 - `npm install`
 - `sudo ./public/compiler/setup.sh`
+
+Then either
 - `meteor run`
 - connect to `localhost:3000`
 - write code in JavaScript and be amazed
+
+Or
+- `jigh-sight < javascript-file.js`  to retrieve information about the file
 
 ## Status
 _Development_

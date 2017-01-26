@@ -157,8 +157,8 @@ char *jserrortype = "ERROR TYPE";
   ObjectBindingPattern ArrayBindingPattern YieldExpression ArrowFunction CallExpression NullLiteral BooleanLiteral
   ArrayLiteral ClassExpression GeneratorExpression MethodDefinition CoverInitializedName
   CoverParenthesizedExpressionAndArrowParameterList FunctionExpression SuperCall BindingElement FormalParameter
-  SingleNameBinding FromClause
-%type <cval> MultiplicativeOperator AssignmentOperator
+  SingleNameBinding FromClause MultiplicativeOperator AssignmentOperator
+//%type <cval> MultiplicativeOperator AssignmentOperator
 
 %%
 
@@ -387,7 +387,7 @@ PropertyDefinitionList:
 
 PropertyDefinition:
 	  IdentifierReference
-	  | CoverInitializedName /* TODO: Cannot find real code of this use case */
+	  | CoverInitializedName
     | PropertyName COLON AssignmentExpression
 	  | MethodDefinition
 	  ;
@@ -735,8 +735,8 @@ BindingList:
     ;
 
 LexicalBinding:
-    BindingIdentifier
-    | BindingIdentifier Initialiser
+    // TODO: add this BindingIdentifier, trust me
+    BindingIdentifier Initialiser
     | BindingPattern Initialiser
     ;
 

@@ -119,14 +119,22 @@ NaN                                 { count(); return LITERAL_NAN; }
 ","                                 { count(); printf("operator,%d,%lu,%d\n", line, strlen(yytext), column); return COMMA; }
 "."                                 { count(); printf("operator,%d,%lu,%d\n", line, strlen(yytext), column); return FULL_STOP; }
 "..."                               { count(); printf("operator,%d,%lu,%d\n", line, strlen(yytext), column); return ELLIPSIS; }
-";"                                 { column++; return SEMICOLON; }
-"\""                                { column++; return DOUBLE_QUOTE; }
-"'"                                 { column++; return SINGLE_QUOTE; }
+";"                                 { count(); return SEMICOLON; }
+"\""                                { count(); return DOUBLE_QUOTE; }
+"'"                                 { count(); return SINGLE_QUOTE; }
 
 {DIGIT}+\.{DIGIT}+                  { yylval.sval = strdup(yytext); count(); return VALUE_DOUBLE; }
-{DIGIT}+                            { yylval.sval = strdup(yytext); printf("digit,%d,%lu,%d\n", line, strlen(yytext), column); count(); return VALUE_INTEGER; }
-\"(\\.|[^\\"])*\"                   { yylval.sval = strdup(yytext); count(); return VALUE_STRING; }
-\'(\\.|[^\\"])*\'                   { yylval.sval = strdup(yytext); count(); return VALUE_STRING; }
+{DIGIT}+                            { yylval.sval = strdup(yytext); count(); printf("digit,%d,%lu,%d\n", line, strlen(yytext), column); return VALUE_INTEGER; }
+\"(\\.|[^\\"])*\"                   {
+                                      yylval.sval = strdup(yytext);
+                                      count();
+                                      printf("string,%d,%lu,%d\n", line, strlen(yytext), column);
+                                      return VALUE_STRING; }
+\'(\\.|[^\\"])*\'                   {
+                                      yylval.sval = strdup(yytext);
+                                      count();
+                                      printf("string,%d,%lu,%d\n", line, strlen(yytext), column);
+                                      return VALUE_STRING; }
 
  /*
  http://dinosaur.compilertools.net/flex/flex_11.html
@@ -162,8 +170,8 @@ NaN                                 { count(); return LITERAL_NAN; }
 
 <MULTILINE_STRING>\`                {
                                       BEGIN(INITIAL);
-                                      count();
                                       yylval.sval = strdup(stringbuffer);
+                                      count();
                                       return VALUE_STRING;
                                       free(stringbuffer);
                                     }
@@ -171,8 +179,8 @@ NaN                                 { count(); return LITERAL_NAN; }
 <MULTILINE_STRING>.                 { stringbuffer = strcat(stringbuffer, yytext); }
 
 {CHAR}({DIGIT}|{CHAR})*             {
-                                      count();
                                       yylval.sval = strdup(yytext);
+                                      count();
                                       printf("identifier,%d,%lu,%d, %s\n", line, strlen(yytext), column, error_buffer);
                                       return IDENTIFIER;
                                     }

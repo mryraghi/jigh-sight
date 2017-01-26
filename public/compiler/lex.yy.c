@@ -1548,17 +1548,17 @@ YY_RULE_SETUP
 case 102:
 YY_RULE_SETUP
 #line 122 "lex.l"
-{ column++; return SEMICOLON; }
+{ count(); return SEMICOLON; }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
 #line 123 "lex.l"
-{ column++; return DOUBLE_QUOTE; }
+{ count(); return DOUBLE_QUOTE; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
 #line 124 "lex.l"
-{ column++; return SINGLE_QUOTE; }
+{ count(); return SINGLE_QUOTE; }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
@@ -1568,19 +1568,27 @@ YY_RULE_SETUP
 case 106:
 YY_RULE_SETUP
 #line 127 "lex.l"
-{ yylval.sval = strdup(yytext); printf("digit,%d,%lu,%d\n", line, strlen(yytext), column); count(); return VALUE_INTEGER; }
+{ yylval.sval = strdup(yytext); count(); printf("digit,%d,%lu,%d\n", line, strlen(yytext), column); return VALUE_INTEGER; }
 	YY_BREAK
 case 107:
 /* rule 107 can match eol */
 YY_RULE_SETUP
 #line 128 "lex.l"
-{ yylval.sval = strdup(yytext); count(); return VALUE_STRING; }
+{
+                                      yylval.sval = strdup(yytext);
+                                      count();
+                                      printf("string,%d,%lu,%d\n", line, strlen(yytext), column);
+                                      return VALUE_STRING; }
 	YY_BREAK
 case 108:
 /* rule 108 can match eol */
 YY_RULE_SETUP
-#line 129 "lex.l"
-{ yylval.sval = strdup(yytext); count(); return VALUE_STRING; }
+#line 133 "lex.l"
+{
+                                      yylval.sval = strdup(yytext);
+                                      count();
+                                      printf("string,%d,%lu,%d\n", line, strlen(yytext), column);
+                                      return VALUE_STRING; }
 	YY_BREAK
 /*
  http://dinosaur.compilertools.net/flex/flex_11.html
@@ -1604,7 +1612,7 @@ YY_RULE_SETUP
  */
 case 109:
 YY_RULE_SETUP
-#line 153 "lex.l"
+#line 161 "lex.l"
 {
                                       BEGIN(MULTILINE_STRING);
                                       stringbuffer = strcat(NULL, malloc(sizeof(char*)));
@@ -1616,11 +1624,11 @@ YY_RULE_SETUP
  */
 case 110:
 YY_RULE_SETUP
-#line 163 "lex.l"
+#line 171 "lex.l"
 {
                                       BEGIN(INITIAL);
-                                      count();
                                       yylval.sval = strdup(stringbuffer);
+                                      count();
                                       return VALUE_STRING;
                                       free(stringbuffer);
                                     }
@@ -1628,20 +1636,20 @@ YY_RULE_SETUP
 case 111:
 /* rule 111 can match eol */
 YY_RULE_SETUP
-#line 170 "lex.l"
+#line 178 "lex.l"
 { count(); }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 171 "lex.l"
+#line 179 "lex.l"
 { stringbuffer = strcat(stringbuffer, yytext); }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 173 "lex.l"
+#line 181 "lex.l"
 {
-                                      count();
                                       yylval.sval = strdup(yytext);
+                                      count();
                                       printf("identifier,%d,%lu,%d, %s\n", line, strlen(yytext), column, error_buffer);
                                       return IDENTIFIER;
                                     }
@@ -1649,27 +1657,27 @@ YY_RULE_SETUP
 case 114:
 /* rule 114 can match eol */
 YY_RULE_SETUP
-#line 180 "lex.l"
+#line 188 "lex.l"
 /*{ return LINE_FEED; }*/ { count(); }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 181 "lex.l"
+#line 189 "lex.l"
 /*{ return CARRIAGE_RETURN; }*/ { count(); }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 183 "lex.l"
+#line 191 "lex.l"
 { count(); } /* spaces and tabs, do nothing */
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(MULTILINE_STRING):
-#line 184 "lex.l"
+#line 192 "lex.l"
 { return END_OF_FILE; } /* <<EOF>> */
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 185 "lex.l"
+#line 193 "lex.l"
 {
                                       count();
                                       yyerror("Unknown character");
@@ -1677,10 +1685,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 189 "lex.l"
+#line 197 "lex.l"
 ECHO;
 	YY_BREAK
-#line 1684 "lex.yy.c"
+#line 1692 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2661,7 +2669,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 189 "lex.l"
+#line 197 "lex.l"
 
 
 
