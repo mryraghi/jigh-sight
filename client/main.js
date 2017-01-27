@@ -39,6 +39,10 @@ Template.JS.onRendered(function () {
     Meteor.call('run', editor.getValue(), function (error, result) {
       // empty result
       Session.set('scriptOutput', '');
+      // reset variables
+      Session.set('console', []);
+      // reset variables
+      Session.set('variables', []);
 
       // if defined then clear css classes from editor
       if (marker) marker.clear();
@@ -55,8 +59,6 @@ Template.JS.onRendered(function () {
             newResult += value + '\n';
             Session.set('scriptOutput', newResult);
           } else if (_.startsWith(value, '@')) {
-            // reset variables
-            Session.set('variables', []);
 
             // get all variables which are divided by a semicolon
             let parsedVars = value.split(';');
@@ -86,8 +88,6 @@ Template.JS.onRendered(function () {
               }
             });
           } else if (_.startsWith(value, '$')) {
-            // reset variables
-            Session.set('console', []);
 
             // get all variables which are divided by a semicolon
             let parsedOutputs = value.split(';');
