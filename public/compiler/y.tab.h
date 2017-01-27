@@ -40,244 +40,248 @@
       know about them.  */
    enum yytokentype {
      END_OF_FILE = 0,
-     BREAK = 258,
-     CASE = 259,
-     CATCH = 260,
-     CLASS = 261,
-     CONST = 262,
-     CONTINUE = 263,
-     DEBUGGER = 264,
-     DEFAULT = 265,
-     DELETE = 266,
-     DO = 267,
-     ELSE = 268,
-     EXPORT = 269,
-     EXTENDS = 270,
-     FINALLY = 271,
-     FOR = 272,
-     FUNCTION = 273,
-     IF = 274,
-     IMPORT = 275,
-     IN = 276,
-     INSTANCEOF = 277,
-     LET = 278,
-     NEW = 279,
-     OF = 280,
-     RETURN = 281,
-     SUPER = 282,
-     SWITCH = 283,
-     THIS = 284,
-     THROW = 285,
-     TRY = 286,
-     TYPEOF = 287,
-     VAR = 288,
-     VOID = 289,
-     WHILE = 290,
-     WITH = 291,
-     YIELD = 292,
-     ENUM = 293,
-     AWAIT = 294,
-     IMPLEMENTS = 295,
-     INTERFACE = 296,
-     PACKAGE = 297,
-     PRIVATE = 298,
-     PROTECTED = 299,
-     PUBLIC = 300,
-     LITERAL_NULL = 301,
-     LITERAL_TRUE = 302,
-     LITERAL_FALSE = 303,
-     LITERAL_UNDEFINED = 304,
-     LITERAL_NAN = 305,
-     UNARY_ADD = 306,
-     UNARY_SUBTRACT = 307,
-     LOGICAL_NOT = 308,
-     MULTIPLY = 309,
-     DIVIDE = 310,
-     MODULO = 311,
-     ADD = 312,
-     SUBTRACT = 313,
-     EQUAL = 314,
-     NOT_EQUAL = 315,
-     EXACTLY_EQUAL = 316,
-     NOT_EXACTLY_EQUAL = 317,
-     LEFT_SHIFT = 318,
-     SIGNED_RIGHT_SHIFT = 319,
-     UNSIGNED_RIGHT_SHIFT = 320,
-     LESS_THAN = 321,
-     GREATER_THAN = 322,
-     LESS_THAN_OR_EQUAL = 323,
-     GREATER_THAN_OR_EQUAL = 324,
-     QUESTION_MARK = 325,
-     COLON = 326,
-     LOGICAL_AND = 327,
-     LOGICAL_OR = 328,
-     BITWISE_AND = 329,
-     BITWISE_OR = 330,
-     BITWISE_XOR = 331,
-     BITWISE_NOT = 332,
-     ASSIGNMENT = 333,
-     ADDITION_ASSIGNMENT = 334,
-     SUBTRACTION_ASSIGNMENT = 335,
-     MULTIPLICATION_ASSIGNMENT = 336,
-     DIVISION_ASSIGNMENT = 337,
-     MODULUS_ASSIGNMENT = 338,
-     EXPONENTIATION_ASSIGNMENT = 339,
-     LEFT_SHIFT_ASSIGNMENT = 340,
-     SIGNED_RIGHT_SHIFT_ASSIGNMENT = 341,
-     UNSIGNED_RIGHT_SHIFT_ASSIGNMENT = 342,
-     BITWISE_AND_ASSIGNMENT = 343,
-     BITWISE_XOR_ASSIGNMENT = 344,
-     BITWISE_OR_ASSIGNMENT = 345,
-     ARROW_FUNCTION = 346,
-     RIGHT_PAREN = 347,
-     LEFT_PAREN = 348,
-     RIGHT_BRACE = 349,
-     LEFT_BRACE = 350,
-     RIGHT_BRACKET = 351,
-     LEFT_BRACKET = 352,
-     COMMA = 353,
-     FULL_STOP = 354,
-     ELLIPSIS = 355,
-     SEMICOLON = 356,
-     DOUBLE_QUOTE = 357,
-     SINGLE_QUOTE = 358,
-     VALUE_INTEGER = 359,
-     VALUE_DOUBLE = 360,
-     VALUE_STRING = 361,
-     IDENTIFIER = 362,
-     LINE_FEED = 363,
-     CARRIAGE_RETURN = 364,
-     LINE_SEPARATOR = 365,
-     PARAGRAPH_SEPARATOR = 366
+     CONSOLE = 258,
+     BREAK = 259,
+     CASE = 260,
+     CATCH = 261,
+     CLASS = 262,
+     CONST = 263,
+     CONTINUE = 264,
+     DEBUGGER = 265,
+     DEFAULT = 266,
+     DELETE = 267,
+     DO = 268,
+     ELSE = 269,
+     EXPORT = 270,
+     EXTENDS = 271,
+     FINALLY = 272,
+     FOR = 273,
+     FUNCTION = 274,
+     IF = 275,
+     IMPORT = 276,
+     IN = 277,
+     INSTANCEOF = 278,
+     LET = 279,
+     NEW = 280,
+     OF = 281,
+     RETURN = 282,
+     SUPER = 283,
+     SWITCH = 284,
+     THIS = 285,
+     THROW = 286,
+     TRY = 287,
+     TYPEOF = 288,
+     VAR = 289,
+     VOID = 290,
+     WHILE = 291,
+     WITH = 292,
+     YIELD = 293,
+     ENUM = 294,
+     AWAIT = 295,
+     IMPLEMENTS = 296,
+     INTERFACE = 297,
+     PACKAGE = 298,
+     PRIVATE = 299,
+     PROTECTED = 300,
+     PUBLIC = 301,
+     LITERAL_NULL = 302,
+     LITERAL_TRUE = 303,
+     LITERAL_FALSE = 304,
+     LITERAL_UNDEFINED = 305,
+     LITERAL_NAN = 306,
+     UNARY_ADD = 307,
+     UNARY_SUBTRACT = 308,
+     LOGICAL_NOT = 309,
+     MULTIPLY = 310,
+     DIVIDE = 311,
+     MODULO = 312,
+     ADD = 313,
+     SUBTRACT = 314,
+     EQUAL = 315,
+     NOT_EQUAL = 316,
+     EXACTLY_EQUAL = 317,
+     NOT_EXACTLY_EQUAL = 318,
+     LEFT_SHIFT = 319,
+     SIGNED_RIGHT_SHIFT = 320,
+     UNSIGNED_RIGHT_SHIFT = 321,
+     LESS_THAN = 322,
+     GREATER_THAN = 323,
+     LESS_THAN_OR_EQUAL = 324,
+     GREATER_THAN_OR_EQUAL = 325,
+     QUESTION_MARK = 326,
+     COLON = 327,
+     LOGICAL_AND = 328,
+     LOGICAL_OR = 329,
+     BITWISE_AND = 330,
+     BITWISE_OR = 331,
+     BITWISE_XOR = 332,
+     BITWISE_NOT = 333,
+     ASSIGNMENT = 334,
+     ADDITION_ASSIGNMENT = 335,
+     SUBTRACTION_ASSIGNMENT = 336,
+     MULTIPLICATION_ASSIGNMENT = 337,
+     DIVISION_ASSIGNMENT = 338,
+     MODULUS_ASSIGNMENT = 339,
+     EXPONENTIATION_ASSIGNMENT = 340,
+     LEFT_SHIFT_ASSIGNMENT = 341,
+     SIGNED_RIGHT_SHIFT_ASSIGNMENT = 342,
+     UNSIGNED_RIGHT_SHIFT_ASSIGNMENT = 343,
+     BITWISE_AND_ASSIGNMENT = 344,
+     BITWISE_XOR_ASSIGNMENT = 345,
+     BITWISE_OR_ASSIGNMENT = 346,
+     ARROW_FUNCTION = 347,
+     RIGHT_PAREN = 348,
+     LEFT_PAREN = 349,
+     RIGHT_BRACE = 350,
+     LEFT_BRACE = 351,
+     RIGHT_BRACKET = 352,
+     LEFT_BRACKET = 353,
+     COMMA = 354,
+     FULL_STOP = 355,
+     ELLIPSIS = 356,
+     SEMICOLON = 357,
+     DOUBLE_QUOTE = 358,
+     SINGLE_QUOTE = 359,
+     VALUE_INTEGER = 360,
+     VALUE_DOUBLE = 361,
+     VALUE_STRING = 362,
+     IDENTIFIER = 363,
+     LINE_FEED = 364,
+     CARRIAGE_RETURN = 365,
+     LINE_SEPARATOR = 366,
+     PARAGRAPH_SEPARATOR = 367
    };
 #endif
 /* Tokens.  */
 #define END_OF_FILE 0
-#define BREAK 258
-#define CASE 259
-#define CATCH 260
-#define CLASS 261
-#define CONST 262
-#define CONTINUE 263
-#define DEBUGGER 264
-#define DEFAULT 265
-#define DELETE 266
-#define DO 267
-#define ELSE 268
-#define EXPORT 269
-#define EXTENDS 270
-#define FINALLY 271
-#define FOR 272
-#define FUNCTION 273
-#define IF 274
-#define IMPORT 275
-#define IN 276
-#define INSTANCEOF 277
-#define LET 278
-#define NEW 279
-#define OF 280
-#define RETURN 281
-#define SUPER 282
-#define SWITCH 283
-#define THIS 284
-#define THROW 285
-#define TRY 286
-#define TYPEOF 287
-#define VAR 288
-#define VOID 289
-#define WHILE 290
-#define WITH 291
-#define YIELD 292
-#define ENUM 293
-#define AWAIT 294
-#define IMPLEMENTS 295
-#define INTERFACE 296
-#define PACKAGE 297
-#define PRIVATE 298
-#define PROTECTED 299
-#define PUBLIC 300
-#define LITERAL_NULL 301
-#define LITERAL_TRUE 302
-#define LITERAL_FALSE 303
-#define LITERAL_UNDEFINED 304
-#define LITERAL_NAN 305
-#define UNARY_ADD 306
-#define UNARY_SUBTRACT 307
-#define LOGICAL_NOT 308
-#define MULTIPLY 309
-#define DIVIDE 310
-#define MODULO 311
-#define ADD 312
-#define SUBTRACT 313
-#define EQUAL 314
-#define NOT_EQUAL 315
-#define EXACTLY_EQUAL 316
-#define NOT_EXACTLY_EQUAL 317
-#define LEFT_SHIFT 318
-#define SIGNED_RIGHT_SHIFT 319
-#define UNSIGNED_RIGHT_SHIFT 320
-#define LESS_THAN 321
-#define GREATER_THAN 322
-#define LESS_THAN_OR_EQUAL 323
-#define GREATER_THAN_OR_EQUAL 324
-#define QUESTION_MARK 325
-#define COLON 326
-#define LOGICAL_AND 327
-#define LOGICAL_OR 328
-#define BITWISE_AND 329
-#define BITWISE_OR 330
-#define BITWISE_XOR 331
-#define BITWISE_NOT 332
-#define ASSIGNMENT 333
-#define ADDITION_ASSIGNMENT 334
-#define SUBTRACTION_ASSIGNMENT 335
-#define MULTIPLICATION_ASSIGNMENT 336
-#define DIVISION_ASSIGNMENT 337
-#define MODULUS_ASSIGNMENT 338
-#define EXPONENTIATION_ASSIGNMENT 339
-#define LEFT_SHIFT_ASSIGNMENT 340
-#define SIGNED_RIGHT_SHIFT_ASSIGNMENT 341
-#define UNSIGNED_RIGHT_SHIFT_ASSIGNMENT 342
-#define BITWISE_AND_ASSIGNMENT 343
-#define BITWISE_XOR_ASSIGNMENT 344
-#define BITWISE_OR_ASSIGNMENT 345
-#define ARROW_FUNCTION 346
-#define RIGHT_PAREN 347
-#define LEFT_PAREN 348
-#define RIGHT_BRACE 349
-#define LEFT_BRACE 350
-#define RIGHT_BRACKET 351
-#define LEFT_BRACKET 352
-#define COMMA 353
-#define FULL_STOP 354
-#define ELLIPSIS 355
-#define SEMICOLON 356
-#define DOUBLE_QUOTE 357
-#define SINGLE_QUOTE 358
-#define VALUE_INTEGER 359
-#define VALUE_DOUBLE 360
-#define VALUE_STRING 361
-#define IDENTIFIER 362
-#define LINE_FEED 363
-#define CARRIAGE_RETURN 364
-#define LINE_SEPARATOR 365
-#define PARAGRAPH_SEPARATOR 366
+#define CONSOLE 258
+#define BREAK 259
+#define CASE 260
+#define CATCH 261
+#define CLASS 262
+#define CONST 263
+#define CONTINUE 264
+#define DEBUGGER 265
+#define DEFAULT 266
+#define DELETE 267
+#define DO 268
+#define ELSE 269
+#define EXPORT 270
+#define EXTENDS 271
+#define FINALLY 272
+#define FOR 273
+#define FUNCTION 274
+#define IF 275
+#define IMPORT 276
+#define IN 277
+#define INSTANCEOF 278
+#define LET 279
+#define NEW 280
+#define OF 281
+#define RETURN 282
+#define SUPER 283
+#define SWITCH 284
+#define THIS 285
+#define THROW 286
+#define TRY 287
+#define TYPEOF 288
+#define VAR 289
+#define VOID 290
+#define WHILE 291
+#define WITH 292
+#define YIELD 293
+#define ENUM 294
+#define AWAIT 295
+#define IMPLEMENTS 296
+#define INTERFACE 297
+#define PACKAGE 298
+#define PRIVATE 299
+#define PROTECTED 300
+#define PUBLIC 301
+#define LITERAL_NULL 302
+#define LITERAL_TRUE 303
+#define LITERAL_FALSE 304
+#define LITERAL_UNDEFINED 305
+#define LITERAL_NAN 306
+#define UNARY_ADD 307
+#define UNARY_SUBTRACT 308
+#define LOGICAL_NOT 309
+#define MULTIPLY 310
+#define DIVIDE 311
+#define MODULO 312
+#define ADD 313
+#define SUBTRACT 314
+#define EQUAL 315
+#define NOT_EQUAL 316
+#define EXACTLY_EQUAL 317
+#define NOT_EXACTLY_EQUAL 318
+#define LEFT_SHIFT 319
+#define SIGNED_RIGHT_SHIFT 320
+#define UNSIGNED_RIGHT_SHIFT 321
+#define LESS_THAN 322
+#define GREATER_THAN 323
+#define LESS_THAN_OR_EQUAL 324
+#define GREATER_THAN_OR_EQUAL 325
+#define QUESTION_MARK 326
+#define COLON 327
+#define LOGICAL_AND 328
+#define LOGICAL_OR 329
+#define BITWISE_AND 330
+#define BITWISE_OR 331
+#define BITWISE_XOR 332
+#define BITWISE_NOT 333
+#define ASSIGNMENT 334
+#define ADDITION_ASSIGNMENT 335
+#define SUBTRACTION_ASSIGNMENT 336
+#define MULTIPLICATION_ASSIGNMENT 337
+#define DIVISION_ASSIGNMENT 338
+#define MODULUS_ASSIGNMENT 339
+#define EXPONENTIATION_ASSIGNMENT 340
+#define LEFT_SHIFT_ASSIGNMENT 341
+#define SIGNED_RIGHT_SHIFT_ASSIGNMENT 342
+#define UNSIGNED_RIGHT_SHIFT_ASSIGNMENT 343
+#define BITWISE_AND_ASSIGNMENT 344
+#define BITWISE_XOR_ASSIGNMENT 345
+#define BITWISE_OR_ASSIGNMENT 346
+#define ARROW_FUNCTION 347
+#define RIGHT_PAREN 348
+#define LEFT_PAREN 349
+#define RIGHT_BRACE 350
+#define LEFT_BRACE 351
+#define RIGHT_BRACKET 352
+#define LEFT_BRACKET 353
+#define COMMA 354
+#define FULL_STOP 355
+#define ELLIPSIS 356
+#define SEMICOLON 357
+#define DOUBLE_QUOTE 358
+#define SINGLE_QUOTE 359
+#define VALUE_INTEGER 360
+#define VALUE_DOUBLE 361
+#define VALUE_STRING 362
+#define IDENTIFIER 363
+#define LINE_FEED 364
+#define CARRIAGE_RETURN 365
+#define LINE_SEPARATOR 366
+#define PARAGRAPH_SEPARATOR 367
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 130 "yacc.y"
+#line 164 "yacc.y"
 {
-    int ival;
-    double dval;
-    const char* sval;
-    bool bval;
-    char cval;
+    int int_value;
+    double double_value;
+    char* string_value;
+    bool bool_value;
+    char *char_value;
+
+    variables *store;
 }
 /* Line 1529 of yacc.c.  */
-#line 281 "y.tab.h"
+#line 285 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

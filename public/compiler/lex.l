@@ -1,8 +1,11 @@
 %{
+#include <string.h>
+
 char* stringbuffer;
 int column = 0;
 int line = 0;
 char error_buffer[256];
+variables *identifier(char *identifier_name);
 
 void count();
 %}
@@ -21,6 +24,7 @@ CHAR [$_a-zA-Z]
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/] { /* Multiline comment */ }
 "//".*                              { /* one-line one */ }
 
+console                             { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return CONSOLE; }
 break                               { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return BREAK; }
 case                                { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return CASE; }
 catch                               { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return CATCH; }
@@ -65,10 +69,10 @@ private                             { count(); printf("reserved,%d,%lu,%d\n", li
 protected                           { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return PROTECTED; }
 public                              { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return PUBLIC; }
 null                                { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_NULL; }
-true                                { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_TRUE; }
-false                               { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_FALSE; }
-undefined                           { count(); printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_UNDEFINED; }
-NaN                                 { count(); return LITERAL_NAN; }
+true                                { count(); yylval.string_value = "true"; printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_TRUE; }
+false                               { count(); yylval.string_value = "false"; printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_FALSE; }
+undefined                           { count(); yylval.string_value = "undefined"; printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_UNDEFINED; }
+NaN                                 { count(); yylval.string_value = "NaN"; printf("reserved,%d,%lu,%d\n", line, strlen(yytext), column); return LITERAL_NAN; }
 "++"                                { count(); printf("operator,%d,%lu,%d\n", line, strlen(yytext), column); return UNARY_ADD; }
 "--"                                { count(); printf("operator,%d,%lu,%d\n", line, strlen(yytext), column); return UNARY_SUBTRACT; }
 "!"                                 { count(); printf("operator,%d,%lu,%d\n", line, strlen(yytext), column); return LOGICAL_NOT; }
@@ -123,18 +127,19 @@ NaN                                 { count(); return LITERAL_NAN; }
 "\""                                { count(); return DOUBLE_QUOTE; }
 "'"                                 { count(); return SINGLE_QUOTE; }
 
-{DIGIT}+\.{DIGIT}+                  { yylval.sval = strdup(yytext); count(); return VALUE_DOUBLE; }
-{DIGIT}+                            { yylval.sval = strdup(yytext); count(); printf("digit,%d,%lu,%d\n", line, strlen(yytext), column); return VALUE_INTEGER; }
+{DIGIT}+\.{DIGIT}+                  { yylval.double_value = atof(yytext); count(); return VALUE_DOUBLE; }
+{DIGIT}+                            { yylval.string_value = strdup(yytext); count(); printf("digit,%d,%lu,%d\n", line, strlen(yytext), column); return VALUE_INTEGER; }
 \"(\\.|[^\\"])*\"                   {
-                                      yylval.sval = strdup(yytext);
+                                      yylval.string_value = strdup(yytext);
                                       count();
                                       printf("string,%d,%lu,%d\n", line, strlen(yytext), column);
                                       return VALUE_STRING; }
 \'(\\.|[^\\"])*\'                   {
-                                      yylval.sval = strdup(yytext);
+                                      yylval.string_value = strdup(yytext);
                                       count();
                                       printf("string,%d,%lu,%d\n", line, strlen(yytext), column);
-                                      return VALUE_STRING; }
+                                      return VALUE_STRING;
+                                    }
 
  /*
  http://dinosaur.compilertools.net/flex/flex_11.html
@@ -170,8 +175,8 @@ NaN                                 { count(); return LITERAL_NAN; }
 
 <MULTILINE_STRING>\`                {
                                       BEGIN(INITIAL);
-                                      yylval.sval = strdup(stringbuffer);
                                       count();
+                                      yylval.string_value = strdup(stringbuffer);
                                       return VALUE_STRING;
                                       free(stringbuffer);
                                     }
@@ -179,9 +184,9 @@ NaN                                 { count(); return LITERAL_NAN; }
 <MULTILINE_STRING>.                 { stringbuffer = strcat(stringbuffer, yytext); }
 
 {CHAR}({DIGIT}|{CHAR})*             {
-                                      yylval.sval = strdup(yytext);
                                       count();
-                                      printf("identifier,%d,%lu,%d, %s\n", line, strlen(yytext), column, error_buffer);
+                                      yylval.string_value = strdup(yytext);
+                                      printf("identifier,%d,%lu,%d\n", line, strlen(yytext), column);
                                       return IDENTIFIER;
                                     }
 
@@ -198,6 +203,7 @@ NaN                                 { count(); return LITERAL_NAN; }
 
 void count() {
   int i;
+  /* error_buffer could be implemented in the future */
   static char *eb = error_buffer;
   for (i = 0; yytext[i] != '\0'; i++) {
     if (yytext[i] == '\n') {

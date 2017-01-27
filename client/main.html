@@ -9,22 +9,56 @@
 <template name="JS">
   <h1 class="my-5">Welcome to Jigh-Sight!</h1>
 
-  <div class="row mb-4">
-    <div class="col-12">
-      <div class="card">
+  <div class="row">
+    <div class="col-8">
+      <div class="card mb-4">
         <div class="card-block">
           <h4 class="card-title">Editor</h4>
+          <hr>
           <textarea id="editor" title="editor"></textarea>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
       <div class="card">
         <div class="card-block">
           <h4 class="card-title">Output</h4>
-          <samp>{{output}}</samp>
+          <hr>
+          <samp class="text-danger">{{output}}</samp>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-block">
+              <h4 class="card-title">Variables</h4>
+              <hr>
+              {{#if variables}}
+                <ul>
+                  {{#each variables}}
+                    <li>{{name}} = {{value}}</li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <p>No variables</p>
+              {{/if}}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-block">
+              <h4 class="card-title">Console</h4>
+              <hr>
+              {{#if console}}
+                <ul>
+                  {{#each console}}
+                    <li>jigh-sight $ {{name}}: {{value}}</li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <samp>jigh-sight $</samp>
+              {{/if}}
+            </div>
+          </div>
         </div>
       </div>
     </div>

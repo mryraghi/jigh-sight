@@ -13,4 +13,4 @@ yacc -vd yacc.y
 
 # gcc
 echo '=> Running gcc'
-gcc y.tab.c -ly -ll -o ~/bin/jigh-sight #&>/dev/null
+gcc y.tab.c -ly -ll -o ~/bin/jigh-sight #&>/dev/null 

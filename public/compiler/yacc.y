@@ -1,5 +1,6 @@
 %{
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -13,9 +14,42 @@ extern int column;
 char *jserror = "- [Jigh-Sight Error]";
 char *jserrortype = "ERROR TYPE";
 
+struct variables
+{
+  char *name;
+  //int type;
+  union
+  {
+    double double_var;
+    bool boolean_var;
+    int int_value;
+    char *string_value;
+  } reference;
+  struct variables *next;
+};
+
+typedef struct variables variables;
+
+/* A chain of 'struct variables' */
+extern struct variables *store;
+
+variables *putvar (char *, char *);
+char* getvar (char const *);
+
+/* A chain of 'struct variables' */
+variables *store;
+//variables *identifier(char *identifier_name);
+void display(variables *store);
+
+/*static void storeVariable (char *identifier_name, char *value) {
+  variables *vars = putvar (identifier_name, FNCT);
+  vars->reference.string_value = value;
+}*/
+
 %}
 
 %token END_OF_FILE 0
+%token <string_value> CONSOLE
 %token BREAK
 %token CASE
 %token CATCH
@@ -40,9 +74,9 @@ char *jserrortype = "ERROR TYPE";
 %token NEW
 %token OF
 %token RETURN
-%token <sval> SUPER
+%token SUPER
 %token SWITCH
-%token <sval> THIS
+%token THIS
 %token THROW
 %token TRY
 %token TYPEOF
@@ -59,11 +93,11 @@ char *jserrortype = "ERROR TYPE";
 %token PRIVATE
 %token PROTECTED
 %token PUBLIC
-%token <sval> LITERAL_NULL                // null
-%token <sval> LITERAL_TRUE                // true
-%token <sval> LITERAL_FALSE               // false
-%token LITERAL_UNDEFINED                  // undefined
-%token LITERAL_NAN                        // NaN
+%token <string_value> LITERAL_NULL                // null
+%token <string_value> LITERAL_TRUE                // true
+%token <string_value> LITERAL_FALSE               // false
+%token <string_value> LITERAL_UNDEFINED                  // undefined
+%token <string_value> LITERAL_NAN                        // NaN
 %token UNARY_ADD                          // ++
 %token UNARY_SUBTRACT                     // --
 %token LOGICAL_NOT                        // !
@@ -105,22 +139,22 @@ char *jserrortype = "ERROR TYPE";
 %token BITWISE_XOR_ASSIGNMENT             // ^=
 %token BITWISE_OR_ASSIGNMENT              // |=
 %token ARROW_FUNCTION                     // =>
-%token <sval> RIGHT_PAREN                 // )
-%token <sval> LEFT_PAREN                  // (
-%token <sval> RIGHT_BRACE                 // }
-%token <sval> LEFT_BRACE                  // {
-%token <sval> RIGHT_BRACKET               // ]
-%token <sval> LEFT_BRACKET                // [
+%token RIGHT_PAREN                        // )
+%token LEFT_PAREN                         // (
+%token RIGHT_BRACE                        // }
+%token LEFT_BRACE                         // {
+%token RIGHT_BRACKET                      // ]
+%token LEFT_BRACKET                       // [
 %token COMMA                              // ,
 %token FULL_STOP                          // .
 %token ELLIPSIS                           // ...
 %token SEMICOLON                          // ;
-%token <sval> DOUBLE_QUOTE                // "
-%token <sval> SINGLE_QUOTE                // '
-%token <sval> VALUE_INTEGER
-%token <sval> VALUE_DOUBLE
-%token <sval> VALUE_STRING
-%token <sval> IDENTIFIER
+%token DOUBLE_QUOTE                       // "
+%token SINGLE_QUOTE                       // '
+%token <string_value> VALUE_INTEGER
+%token <string_value> VALUE_DOUBLE
+%token <string_value> VALUE_STRING
+%token <string_value> IDENTIFIER
 %token LINE_FEED
 %token CARRIAGE_RETURN
 %token LINE_SEPARATOR
@@ -128,13 +162,14 @@ char *jserrortype = "ERROR TYPE";
 
 
 %union {
-    int ival;
-    double dval;
-    const char* sval;
-    bool bval;
-    char cval;
-}
+    int int_value;
+    double double_value;
+    char* string_value;
+    bool bool_value;
+    char *char_value;
 
+    variables *store;
+}
 
 %error-verbose
 
@@ -146,19 +181,12 @@ char *jserrortype = "ERROR TYPE";
 %nonassoc NOT_EXACTLY_EQUAL
 %nonassoc ASSIGNMENT
 
-
-%type <sval> Identifier IdentifierName IdentifierStart Statement IfStatement Expression DecimalIntegerLiteral DecimalLiteral NumericLiteral
-  Literal PrimaryExpression MemberExpression NewExpression LeftHandSideExpression
-  PostfixExpression UnaryExpression  MultiplicativeExpression AdditiveExpression
-  ShiftExpression RelationalExpression EqualityExpression AssignmentExpression
-  ConditionalExpression LogicalANDExpression LogicalORExpression BitwiseORExpression
-  BitwiseANDExpression BitwiseXORExpression IdentifierReference BindingIdentifier LabelIdentifier StringLiteral
-  CatchParameter LiteralPropertyName ComputedPropertyName PropertyName PropertyDefinition ObjectLiteral BindingPattern
-  ObjectBindingPattern ArrayBindingPattern YieldExpression ArrowFunction CallExpression NullLiteral BooleanLiteral
-  ArrayLiteral ClassExpression GeneratorExpression MethodDefinition CoverInitializedName
-  CoverParenthesizedExpressionAndArrowParameterList FunctionExpression SuperCall BindingElement FormalParameter
-  SingleNameBinding FromClause MultiplicativeOperator AssignmentOperator
-//%type <cval> MultiplicativeOperator AssignmentOperator
+//%type <char_val> MultiplicativeOperator AssignmentOperator
+%type <string_value> NullLiteral BooleanLiteral LiteralPropertyName Identifier
+  BindingIdentifier Initialiser Literal BindingPattern IdentifierName
+  NumericLiteral DecimalLiteral DecimalIntegerLiteral StringLiteral
+  IdentifierStart "_" "$" IdentifierPart
+%type <store> LexicalBinding VariableDeclaration
 
 %%
 
@@ -206,20 +234,20 @@ LineTerminatorSequence:
  */
 
 IdentifierName:
-    IdentifierStart {}
-    | IdentifierName IdentifierPart
+    IdentifierStart { $$ = $1; }
+    | IdentifierName IdentifierPart { $$ = $1; }
     ;
 
 IdentifierStart:
-    "$"             {}
-    | "_"           {}
-    | IDENTIFIER
+    "$"             { $$ = $1; }
+    | "_"           { $$ = $1; }
+    | IDENTIFIER    { $$ = $1; }
     ;
 
 IdentifierPart:
-    "$"
-    | "_"
-    | IDENTIFIER
+    "$"             { $$ = $1; }
+    | "_"           { $$ = $1; }
+    | IDENTIFIER    { $$ = $1; }
     ;
 
 /* 11.8.1 Null Literals
@@ -252,11 +280,11 @@ NumericLiteral:
 
 DecimalLiteral:
     DecimalIntegerLiteral
-    | VALUE_DOUBLE                           { printf("double,%d,%lu,%d\n", line, strlen($1), column); }
+    | VALUE_DOUBLE                           /*{ printf("double,%d,%lu,%d\n", line, strlen($1), column); }*/
     ;
 
 DecimalIntegerLiteral:
-    VALUE_INTEGER	                           { printf("integer,%d,%lu,%d\n", line, strlen($1), column); }
+    VALUE_INTEGER	                           /*{ printf("integer,%d,%lu,%d\n", line, strlen($1), column); }*/
     ;
 
 
@@ -265,10 +293,7 @@ DecimalIntegerLiteral:
  */
 
  StringLiteral:
-    SINGLE_QUOTE SINGLE_QUOTE
-    | DOUBLE_QUOTE DOUBLE_QUOTE
-    | SINGLE_QUOTE VALUE_STRING SINGLE_QUOTE { printf("string,%d,%lu,%d\n", line, strlen($1), column); }
-    | DOUBLE_QUOTE VALUE_STRING DOUBLE_QUOTE { printf("string,%d,%lu,%d\n", line, strlen($1), column); }
+    VALUE_STRING
     ;
 
 /* TODO: 11.8.5 Regular Expression Literals
@@ -289,7 +314,7 @@ IdentifierReference:
     ;
 
 BindingIdentifier:
-    Identifier
+    Identifier { $$ = $1; }
     | YIELD {}
     ;
 
@@ -299,7 +324,7 @@ LabelIdentifier:
     ;
 
 Identifier:
-    IdentifierName
+    IdentifierName { $$ = $1; }
     ;
 
 /* 12.2 Primary Expression
@@ -412,7 +437,8 @@ CoverInitializedName:
 	  ;
 
 Initialiser:
-    ASSIGNMENT AssignmentExpression
+    ASSIGNMENT Literal { $$ = $2; }
+    | ASSIGNMENT AssignmentExpression {}
     ;
 
 /* TODO: 12.2.8 Regular Expression Literals (RegularExpressionLiteral)
@@ -681,6 +707,7 @@ Statement:
     | ClassDeclaration
     | LexicalDeclaration
     | ExportDeclaration
+    | CONSOLE LEFT_PAREN BindingIdentifier RIGHT_PAREN SEMICOLON { printf("$%s:%s;\n", $3, getvar($3)); }
     ;
 
  HoistableDeclaration:
@@ -735,9 +762,9 @@ BindingList:
     ;
 
 LexicalBinding:
-    // TODO: add this BindingIdentifier, trust me
-    BindingIdentifier Initialiser
-    | BindingPattern Initialiser
+    BindingIdentifier { $$ = putvar($1, "undefined"); }
+    | BindingIdentifier Initialiser { $$ = putvar($1, $2); }
+    | BindingPattern Initialiser { /* not supported yet */ }
     ;
 
 /* 13.3.2 Variable Statement
@@ -754,9 +781,9 @@ VariableDeclarationList:
     ;
 
 VariableDeclaration:
-    BindingIdentifier
-    | BindingIdentifier Initialiser
-    | BindingPattern Initialiser
+    BindingIdentifier { $$ = putvar($1, "undefined"); }
+    | BindingIdentifier Initialiser { $$ = putvar($1, $2); }
+    | BindingPattern Initialiser { /* not supported yet */ }
     ;
 
 /* 13.3.3 Destructuting Binding Patterns
@@ -764,8 +791,8 @@ VariableDeclaration:
  */
 
 BindingPattern:
-	ObjectBindingPattern
-    | ArrayBindingPattern
+	ObjectBindingPattern {}
+    | ArrayBindingPattern {}
 	;
 
 ObjectBindingPattern:
@@ -1264,7 +1291,57 @@ void yyerror(char *s) {
     fprintf(stderr, "%s at line %d: %s\n", jserror, yylineno, s);
 }
 
+void display(variables *store) {
+    variables *temp;
+    temp = store;
+    while(temp!=NULL) {
+      printf("@%s:%s;",temp->name, temp->reference.string_value);
+      temp = temp->next;
+    }
+}
+
+
+variables *putvar (char *var_name, char *var_value) {
+  if (var_name != '\0') {
+
+    // first of all check if variable already exists
+    struct variables *v;
+    // iterate over each variable stored
+    for(v = store; v != (variables *) 0; v = (variables *)v->next){
+      // if variable name exists and is not equal to
+      // the variable we are trying to save then return pointer
+      if(v->name && !strcmp(v->name, var_name)) {
+        yyerror("variable already defined");
+        return v;
+      }
+    }
+    // allocate memory
+    variables *vars = (variables *) malloc (sizeof (variables));
+    vars->name = (char *) malloc (strlen (var_name) + 1);
+    strcpy (vars->name,var_name);
+    vars->reference.string_value = var_value; /* default is undefined */
+    vars->next = (struct variables *)store;
+    store = vars;
+    return vars;
+    /*printf("- -> putvar, name: %s, value: %s\n", var_name, var_value);*/
+  }
+  // otherwise return store
+  return store;
+}
+
+char* getvar (char const *var_name) {
+  variables *vars;
+  for (vars = store; vars != (variables *) 0; vars = (variables *)vars->next)
+    if (strcmp (vars->name, var_name) == 0)
+      return vars->reference.string_value;
+  yyerror("unknown variable");
+  return "return unknown variable";
+}
+
+
 int main(void) {
     yyparse();
+    //variables *ptr = putvar("incredibile", "0");
+    display(store);
     return 0;
 }
